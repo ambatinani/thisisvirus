@@ -78,7 +78,7 @@ if (isset($_SESSION['key'])) {
         $category= $_POST['category'];
         $status  = "disabled";
         $id      = uniqid();
-        $q3      = mysqli_query($con, "INSERT INTO quiz VALUES(NULL,'$id','$name','$correct','$wrong','$total','$time', 'NOW()','$status','$category')");
+        $q3      = mysqli_query($con, "INSERT INTO quiz VALUES(NULL,'$id','$name','$correct','$wrong','$total','$time', 'NOW()','$status','$category')") or die();
         header("location:dash.php?q=4&step=2&eid=$id&n=$total");
     }
         //imagequiz part
