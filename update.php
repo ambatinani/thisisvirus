@@ -68,7 +68,7 @@ if (isset($_SESSION['key'])) {
     }
 }
 if (isset($_SESSION['key'])) {
-    if (@$_GET['q'] == 'addquiz' && $_SESSION['key'] == '54585c506829293a2d4c3b68543b316e2e7a2d277858545a36362e5f39') {
+    if (@$_GET['q'] == 'addquiz) {
         $name    = $_POST['name'];
         $name    = ucwords(strtolower($name));
         $total   = $_POST['total'];
@@ -78,7 +78,7 @@ if (isset($_SESSION['key'])) {
         $category= $_POST['category'];
         $status  = "disabled";
         $id      = uniqid();
-        $q3      = mysqli_query($con, "INSERT INTO quiz VALUES(NULL,'$id','$name','$correct','$wrong','$total','$time', 'NOW()','$status','$category')");
+        $q3      = mysqli_query($con, "INSERT INTO quiz(eid,title,correct,wrong,total,time,date,status,category) VALUES('$id','$name','$correct','$wrong','$total','$time', 'NOW()','$status','$category')");
         header("location:dash.php?q=4&step=2&eid=$id&n=$total");
     }
         //imagequiz part
