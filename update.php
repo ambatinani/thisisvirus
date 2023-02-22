@@ -12,7 +12,7 @@ if (isset($_SESSION['key'])) {
 if (isset($_SESSION['key'])) {
     if (@$_GET['deidquiz'] && $_SESSION['key'] == '54585c506829293a2d4c3b68543b316e2e7a2d277858545a36362e5f39') {
         $eid = @$_GET['deidquiz'];
-        $r1 = mysqli_query($con, "UPDATE quizz SET status='disabled' WHERE eid='$eid' ") or die('Error');
+        $r1 = mysqli_query($con, "UPDATE quiz SET status='disabled' WHERE eid='$eid' ") or die('Error');
         $q = mysqli_query($con, "SELECT * FROM history WHERE eid='$eid' AND status='ongoing' AND score_updated='false'");
         while($row = mysqli_fetch_array($q)){
             $user = $row['username'];
@@ -37,7 +37,7 @@ if (isset($_SESSION['key'])) {
 if (isset($_SESSION['key'])) {
     if (@$_GET['eeidquiz'] && $_SESSION['key'] == '54585c506829293a2d4c3b68543b316e2e7a2d277858545a36362e5f39') {
         $eid = @$_GET['eeidquiz'];
-        $r1 = mysqli_query($con, "UPDATE quizz SET status='enabled' WHERE eid='$eid' ") or die('Error');
+        $r1 = mysqli_query($con, "UPDATE quiz SET status='enabled' WHERE eid='$eid' ") or die('Error');
         header("location:dash.php?q=0");
     }
 }
@@ -61,7 +61,7 @@ if (isset($_SESSION['key'])) {
         }
         
         $r3 = mysqli_query($con, "DELETE FROM questions WHERE eid='$eid' ") or die('Error');
-        $r4 = mysqli_query($con, "DELETE FROM quizz WHERE eid='$eid' ") or die('Error');
+        $r4 = mysqli_query($con, "DELETE FROM quiz WHERE eid='$eid' ") or die('Error');
         $r4 = mysqli_query($con, "DELETE FROM history WHERE eid='$eid' ") or die('Error');
         header("location:dash.php?q=5");
     }
@@ -77,7 +77,7 @@ if (isset($_SESSION['key'])) {
         $category= $_POST['category'];
         $status  = "disabled";
         $id      = uniqid();
-        $q3      = mysqli_query($con, "INSERT INTO quizz VALUES(NULL,'$id','$name','$correct','$wrong','$total','$time',NULL,'$status','$category')") or die();
+        $q3      = mysqli_query($con, "INSERT INTO quiz VALUES(NULL,'$id','$name','$correct','$wrong','$total','$time',NULL,'$status','$category')") or die();
         header("location:dash.php?q=4&step=2&eid=$id&n=$total");
     }
         //imagequiz part
@@ -91,7 +91,7 @@ if (isset($_SESSION['key'])) {
         $category= $_POST['category'];
         $status  = "disabled";
         $id      = uniqid();
-        $q3      = mysqli_query($con, "INSERT INTO quizz VALUES(NULL,'$id','$name','$correct','$wrong','$total','$time',NULL,'$status','$category')");
+        $q3      = mysqli_query($con, "INSERT INTO quiz VALUES(NULL,'$id','$name','$correct','$wrong','$total','$time',NULL,'$status','$category')");
         header("location:dash.php?q=4&step=28&eid=$id&n=$total");
     }
 }
@@ -239,7 +239,7 @@ if (@$_GET['q'] == 'quiz' && @$_GET['step'] == 2 && isset($_SESSION['6e447159425
             $status = $row['status'];
         }
         
-        $q = mysqli_query($con, "SELECT * FROM quizz WHERE eid='$_GET[eid]' ") or die('Error197');
+        $q = mysqli_query($con, "SELECT * FROM quiz WHERE eid='$_GET[eid]' ") or die('Error197');
         while ($row = mysqli_fetch_array($q)) {
             $ttime   = $row['time'];
             $qstatus = $row['status'];
@@ -269,7 +269,7 @@ if (@$_GET['q'] == 'quiz' && @$_GET['step'] == 2 && isset($_SESSION['6e447159425
             
             
             if ($ans == $ansid) {
-                $q = mysqli_query($con, "SELECT * FROM quizz WHERE eid='$eid' ");
+                $q = mysqli_query($con, "SELECT * FROM quiz WHERE eid='$eid' ");
                 while ($row = mysqli_fetch_array($q)) {
                     $correct = $row['correct'];
                     $wrong   = $row['wrong'];
@@ -294,7 +294,7 @@ if (@$_GET['q'] == 'quiz' && @$_GET['step'] == 2 && isset($_SESSION['6e447159425
                     $q = mysqli_query($con, "UPDATE `history` SET `score`=$s,`level`=$sn,`correct`=$r, date= NOW()  WHERE  username = '$username' AND eid = '$eid'") or die('Error14');
                 }
             } else {
-                $q = mysqli_query($con, "SELECT * FROM quizz WHERE eid='$eid' ") or die('Error129');
+                $q = mysqli_query($con, "SELECT * FROM quiz WHERE eid='$eid' ") or die('Error129');
                 while ($row = mysqli_fetch_array($q)) {
                     $wrong   = $row['wrong'];
                     $correct = $row['correct'];
@@ -385,7 +385,7 @@ if (@$_GET['q'] == 'quiz' && @$_GET['step'] == 2 && isset($_SESSION['6e447159425
             $status = $row['status'];
         }
         
-        $q = mysqli_query($con, "SELECT * FROM quizz WHERE eid='$_GET[eid]' ") or die('Error197');
+        $q = mysqli_query($con, "SELECT * FROM quiz WHERE eid='$_GET[eid]' ") or die('Error197');
         while ($row = mysqli_fetch_array($q)) {
             $ttime   = $row['time'];
             $qstatus = $row['status'];
@@ -402,7 +402,7 @@ if (@$_GET['q'] == 'quiz' && @$_GET['step'] == 2 && isset($_SESSION['6e447159425
             $ans = $row['ans'];
             $q = mysqli_query($con, "DELETE FROM user_answer WHERE qid='$qid' AND username='$_SESSION[username]' AND eid='$_GET[eid]' ") or die("Error2222");
             if ($ans == $ansid) {
-                $q = mysqli_query($con, "SELECT * FROM quizz WHERE eid='$eid' ") or die('Error129');
+                $q = mysqli_query($con, "SELECT * FROM quiz WHERE eid='$eid' ") or die('Error129');
                 while ($row = mysqli_fetch_array($q)) {
                     $wrong   = $row['wrong'];
                     $correct = $row['correct'];
@@ -418,7 +418,7 @@ if (@$_GET['q'] == 'quiz' && @$_GET['step'] == 2 && isset($_SESSION['6e447159425
                 $s = $s - $correct;
                 $q = mysqli_query($con, "UPDATE `history` SET `score`=$s,`level`=$sn,`correct`=$r, date= NOW()  WHERE  username = '$username' AND eid = '$eid'") or die('Error11');
             } else {
-                $q = mysqli_query($con, "SELECT * FROM quizz WHERE eid='$eid' ") or die('Error129');
+                $q = mysqli_query($con, "SELECT * FROM quiz WHERE eid='$eid' ") or die('Error129');
                 while ($row = mysqli_fetch_array($q)) {
                     $wrong   = $row['wrong'];
                     $correct = $row['correct'];
