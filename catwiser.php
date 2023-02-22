@@ -1,6 +1,4 @@
-     <?php
-    include_once 'dbConnection.php';
-
+<?php include_once 'dbConnection.php';
     session_start();
     $_SESSION['visit']='0';
     $c=$_GET['cat'];
@@ -9,6 +7,9 @@
     {
         $result = mysqli_query($con, "SELECT username FROM user WHERE username = '$username' and password = '$username'") or die('Error');
         $count = mysqli_num_rows($result);
+        if (!mysqli_query($con, $result)) {
+    echo "Error: " . mysqli_error($con);
+}
         if ($count == 1) {
         while ($row = mysqli_fetch_array($result)) {
             $name = $row['username'];
@@ -20,6 +21,9 @@
 
         else{
        $q3 = mysqli_query($con, "INSERT INTO user(name,username,password) VALUES  ('$username','$username','$username')");
+           if (!mysqli_query($con, $q3)) {
+    echo "Error: " . mysqli_error($con);
+}
         if ($q3) {
       
         $_SESSION["username"] = $username;
@@ -30,6 +34,9 @@
 
         $result = mysqli_query($con, "SELECT username FROM user WHERE username = '$username' and password = '$username'") or die('Error');
         $count = mysqli_num_rows($result);
+       if (!mysqli_query($con, $result)) {
+    echo "Error: " . mysqli_error($con);
+}
         if ($count == 1) {
         while ($row = mysqli_fetch_array($result)) {
             $name = $row['username'];
@@ -41,6 +48,9 @@
 
         else{
        $q3 = mysqli_query($con, "INSERT INTO user(name,username,password) VALUES  ('$username','$username','$username')");
+           if (!mysqli_query($con, $q3)) {
+    echo "Error: " . mysqli_error($con);
+}
         if ($q3) {
       
         $_SESSION["username"] = $username;
@@ -80,7 +90,10 @@
 
     <?php
 
-    $result = mysqli_query($con, "SELECT * FROM quiz WHERE status = 'enabled' and category = '$c' ORDER BY date DESC") or die('Error');
+    $result = mysqli_query($con, "SELECT * FROM quiz WHERE status = 'enabled' and category = '$c' ORDER BY date DESC");
+       if (!mysqli_query($con, $result)) {
+    echo "Error: " . mysqli_error($con);
+}
         echo '<div class="panel"><table class="table table-striped title1"  style="vertical-align:middle">';
         $c = 1;
         while ($row = mysqli_fetch_array($result)) {
