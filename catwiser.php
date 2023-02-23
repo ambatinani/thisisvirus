@@ -1,6 +1,7 @@
 <?php include_once 'dbConnection.php';
 
     session_start();
+    ob_start();
     $_SESSION['visit']='0';
     $c=$_GET['cat'];
     $username=$_GET['user'];
