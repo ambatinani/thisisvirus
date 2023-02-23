@@ -1,5 +1,6 @@
 <?php
 include_once 'dbConnection.php';
+
 session_start();
 $username = $_SESSION['username'];
 if (isset($_SESSION['key'])) {
@@ -77,7 +78,7 @@ if (isset($_SESSION['key'])) {
         $category= $_POST['category'];
         $status  = "disabled";
         $id      = uniqid();
-        $q3      = mysqli_query($con, "INSERT INTO quiz VALUES(NULL,'$id','$name','$correct','$wrong','$total','$time',NULL,'$status','$category')") or die();
+        $q3      = mysqli_query($con, "INSERT INTO quiz VALUES(NULL,'$id','$name','$correct','$wrong','$total','$time', 'NOW()','$status','$category')");
         header("location:dash.php?q=4&step=2&eid=$id&n=$total");
     }
         //imagequiz part
@@ -91,7 +92,7 @@ if (isset($_SESSION['key'])) {
         $category= $_POST['category'];
         $status  = "disabled";
         $id      = uniqid();
-        $q3      = mysqli_query($con, "INSERT INTO quiz VALUES(NULL,'$id','$name','$correct','$wrong','$total','$time',NULL,'$status','$category')");
+        $q3      = mysqli_query($con, "INSERT INTO quiz VALUES(NULL,'$id','$name','$correct','$wrong','$total','$time', 'NOW()','$status','$category')");
         header("location:dash.php?q=4&step=28&eid=$id&n=$total");
     }
 }
