@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -39,7 +40,7 @@ $(function () {
 <span class="logo">Quiz App</span></div>
 <?php
 include_once 'dbConnection.php';
-session_start();
+
 if (!(isset($_SESSION['username']))  || ($_SESSION['key']) != '54585c506829293a2d4c3b68543b316e2e7a2d277858545a36362e5f39') {
     session_destroy();
     header("location:index.php");
@@ -546,9 +547,6 @@ if (@$_GET['q'] == 6 && !(@$_GET['step'])) {
     
 }
 ?>
-
-
-
 
 </div>
 </div></div>
