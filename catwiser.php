@@ -109,7 +109,7 @@
 
            <b><a href="retaker.php?eid=' . $eid . '&total='.$total.'&c='.$c.'" class="btn" style="margin:0px;background:#ff0000;color:white">&nbsp;<span class="title1"><b>Clear</b></span></a></b>
 
-      </td></tr></table>';
+      </td></tr>';
 
 
 
