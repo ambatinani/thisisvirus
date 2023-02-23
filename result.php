@@ -1,4 +1,4 @@
-<<!DOCTYPE html>
+<?php session_start();?>
 <html>
 <head>
         <link rel="icon" href="favicon.ico" type="image/icon" sizes="16x16">
@@ -20,16 +20,14 @@
 <body>
 <?php
  include_once 'dbConnection.php';
-
-    session_start();
+ 
+ ob_start();
      $_SESSION['visit']='1';
     $username=$_SESSION['username'];
     $eid=$_GET['eid'];
     $r = mysqli_query($con, "SELECT category from quiz WHERE  eid = '$eid'") or die('Error');
     while ($rol = mysqli_fetch_row($r)) {$pat=$rol[0];}
     $c=$pat;
-
-
     $q = mysqli_query($con, "SELECT * FROM quiz WHERE eid='$eid' ") or die('Error157');
     while ($row = mysqli_fetch_array($q)) {
         $total = $row['total'];
@@ -50,8 +48,7 @@
     <tr style="color:red"><td style="vertical-align:middle">Wrong Answer&nbsp;<span class="glyphicon glyphicon-remove-arrow" aria-hidden="true"></span></td><td style="vertical-align:middle">' . $w . '</td></tr>
     <tr style="color:orange"><td style="vertical-align:middle">Unattempted&nbsp;<span class="glyphicon glyphicon-ban-arrow" aria-hidden="true"></span></td><td style="vertical-align:middle">' . ($total - $r - $w) . '</td></tr>
     <tr style="color:darkblue"><td style="vertical-align:middle">Score&nbsp;<span class="glyphicon glyphicon-star" aria-hidden="true"></span></td><td style="vertical-align:middle">' . $s . '</td></tr>';
-       
-        echo '<tr></tr></table></div><div class="panel"><br /><h3 align="center" style="font-family:calibri">:: Detailed Analysis ::</h3><br /><ol style="font-size:20px;font-weight:bold;font-family:calibri;margin-top:20px">';
+       echo '<tr></tr></table></div><div class="panel"><br /><h3 align="center" style="font-family:calibri">:: Detailed Analysis ::</h3><br /><ol style="font-size:20px;font-weight:bold;font-family:calibri;margin-top:20px">';
         $q = mysqli_query($con, "SELECT * FROM questions WHERE eid='$_GET[eid]'") or die('Error197');
         while ($row = mysqli_fetch_array($q)) {
             $question = $row['qns'];
@@ -121,10 +118,7 @@
         echo "</div>";
     } else {
         die("Thats a 404 Error bro. You are trying to access a wrong page");
-    }
-
-
-?>
+    }?>
 
 
 </body>
