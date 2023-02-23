@@ -1,5 +1,6 @@
 <?php
 session_start();
+ob_start();
 $rp=$_SESSION['visit'];
 if($rp){echo '<script>window.history.go(-1);</script>';} 
 ?>
