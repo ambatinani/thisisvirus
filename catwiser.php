@@ -8,9 +8,7 @@
     {
         $result = mysqli_query($con, "SELECT username FROM user WHERE username = '$username' and password = '$username'") or die('Error');
         $count = mysqli_num_rows($result);
-        if (!mysqli_query($con, $result)) {
-    echo "Error: " . mysqli_error($con);
-}
+   
         if ($count == 1) {
         while ($row = mysqli_fetch_array($result)) {
             $name = $row['username'];
@@ -22,9 +20,7 @@
 
         else{
        $q3 = mysqli_query($con, "INSERT INTO user(name,username,password) VALUES  ('$username','$username','$username')");
-           if (!mysqli_query($con, $q3)) {
-    echo "Error: " . mysqli_error($con);
-}
+          
         if ($q3) {
       
         $_SESSION["username"] = $username;
