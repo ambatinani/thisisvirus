@@ -1,6 +1,6 @@
 <?php include_once 'dbConnection.php';
+
     session_start();
-    ob_start();
     $_SESSION['visit']='0';
     $c=$_GET['cat'];
     $username=$_GET['user'];
@@ -8,7 +8,6 @@
     {
         $result = mysqli_query($con, "SELECT username FROM user WHERE username = '$username' and password = '$username'") or die('Error');
         $count = mysqli_num_rows($result);
-   
         if ($count == 1) {
         while ($row = mysqli_fetch_array($result)) {
             $name = $row['username'];
@@ -20,7 +19,6 @@
 
         else{
        $q3 = mysqli_query($con, "INSERT INTO user(name,username,password) VALUES  ('$username','$username','$username')");
-          
         if ($q3) {
       
         $_SESSION["username"] = $username;
@@ -31,9 +29,6 @@
 
         $result = mysqli_query($con, "SELECT username FROM user WHERE username = '$username' and password = '$username'") or die('Error');
         $count = mysqli_num_rows($result);
-       if (!mysqli_query($con, $result)) {
-    echo "Error: " . mysqli_error($con);
-}
         if ($count == 1) {
         while ($row = mysqli_fetch_array($result)) {
             $name = $row['username'];
@@ -45,9 +40,6 @@
 
         else{
        $q3 = mysqli_query($con, "INSERT INTO user(name,username,password) VALUES  ('$username','$username','$username')");
-           if (!mysqli_query($con, $q3)) {
-    echo "Error: " . mysqli_error($con);
-}
         if ($q3) {
       
         $_SESSION["username"] = $username;
@@ -60,37 +52,27 @@
         
      
         
-    }
-
-
-    ?>
-    <<!DOCTYPE html>
+    }?>
+    <!DOCTYPE html>
     <html>
     <head>
-        <link rel="icon" href="favicon.ico" type="image/icon" sizes="16x16">
+        
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1.0,user-scalable=no"/>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-        
+
+        <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
        <link  rel="stylesheet" href="css/bootstrap.min.css"/>
+       <link rel="icon" href="favicon.ico" type="image/icon" sizes="16x16">
      <link  rel="stylesheet" href="css/bootstrap-theme.min.css"/>    
      <link rel="stylesheet" href="css/main.css">
      <link  rel="stylesheet" href="css/font.css">
      <script src="js/jquery.js" type="text/javascript"></script>
-
-     
-      <script src="js/bootstrap.min.js"  type="text/javascript"></script>
-    <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'> 
-         
+     <script src="js/bootstrap.min.js"  type="text/javascript"></script>
     </head>
     <body>
-
-    <?php
-
-    $result = mysqli_query($con, "SELECT * FROM quiz WHERE status = 'enabled' and category = '$c' ORDER BY date DESC");
-       if (!mysqli_query($con, $result)) {
-    echo "Error: " . mysqli_error($con);
-}
+  
+    <?php $result = mysqli_query($con, "SELECT * FROM quiz WHERE status = 'enabled' and category = '$c' ORDER BY date DESC") or die('Error');
         echo '<div class="panel"><table class="table table-striped title1"  style="vertical-align:middle">';
         $c = 1;
         while ($row = mysqli_fetch_array($result)) {
@@ -126,7 +108,7 @@
 
            <b><a href="retaker.php?eid=' . $eid . '&total='.$total.'&c='.$c.'" class="btn" style="margin:0px;background:#ff0000;color:white">&nbsp;<span class="title1"><b>Clear</b></span></a></b>
 
-      </td></tr>';
+      </td></tr></table>';
 
 
 
@@ -134,11 +116,6 @@
                 }
             }
         }
-     
-       
-    ?>
-
-       
-        
-    </body>
+?>
+</body>
     </html>
