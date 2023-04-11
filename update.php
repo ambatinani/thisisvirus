@@ -1,4 +1,5 @@
 <?php
+ini_set('display_errors',1);
 include_once 'dbConnection.php';
 session_start();
 $username = $_SESSION['username'];
