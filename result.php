@@ -15,7 +15,14 @@
      
       <script src="js/bootstrap.min.js"  type="text/javascript"></script>
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'> 
-    
+    <style type="text/css">
+        img{
+            width:100%;
+        }
+    </style>
+
+   
+   
     </head>
 <body>
 <?php
@@ -25,6 +32,7 @@
      $_SESSION['visit']='1';
     $username=$_SESSION['username'];
     $eid=$_GET['eid'];
+    $_SESSION['revert']=$eid;
     $r = mysqli_query($con, "SELECT category from quiz WHERE  eid = '$eid'") or die('Error');
     while ($rol = mysqli_fetch_row($r)) {$pat=$rol[0];}
     $c=$pat;
