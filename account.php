@@ -1,17 +1,54 @@
 <?php
 session_start();
 ob_start();
+include_once 'dbConnection.php';
 $rp=$_SESSION['visit'];
-if($rp){echo '<script>window.history.go(-1);</script>';} 
+$tempp=0;
+$nt=0;
+$ut=$_SESSION['username'];
+$pat=0;
+//if($rp){echo '<script>window.history.go(-1);</script>';} 
+if($rp)
+{
+
+    $tempp=$_GET['eid'];
+    $nt=$_SESSION['revert'];
+    if($tempp==$nt)
+    {
+        $r = mysqli_query($con, "SELECT category from quiz WHERE  eid = '$tempp'") or die('Error');
+    while ($rol = mysqli_fetch_row($r)) {$pat=$rol[0];}
+        $url = "catwiser.php?cat=" . urlencode($pat) . "&user=" . urlencode($ut);
+        header("Location: " . $url);
+
+
+    }
+
+
+}
+
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+    <style type="text/css">
+        @media only screen and (max-width: 480px) {
+  .panel{border-color:#eee;margin:5px;padding:10px;font: 15px "Century Gothic", "Times Roman", sans-serif;
+    margin-top:30%;
+  }
+}
+
+img{
+width: 100% !important;
+}
+.applier{ width:100%;display:none !important; }
+    </style>
+
 <link rel="icon" href="favicon.ico" type="image/icon" sizes="16x16">
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1.0,user-scalable=no"/>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Quiz App</title>
 <link  rel="stylesheet" href="css/bootstrap.min.css"/>
@@ -32,6 +69,15 @@ if (@$_GET['w']) {
         //window.history.go(-1);
       
     </script>
+    <style type="text/css">
+        @media only screen and (max-width: 480px) {
+  .panel{border-color:#eee;margin:5px;padding:10px;font: 20px "Century Gothic", "Times Roman", sans-serif;
+    margin-top:45% !important;
+    border-radius:10px !important;
+  }
+}
+
+    </style>
     
 </head>
 <?php
@@ -42,7 +88,7 @@ include_once 'dbConnection.php';
 
 
  <?php
-include_once 'dbConnection.php';
+
 
 if (!(isset($_SESSION['username']))) {
     header("location:index.php");
@@ -129,10 +175,10 @@ if (@$_GET['q'] == 'quiz' && @$_GET['step'] == 2 && isset($_SESSION['6e447159425
                 }
                  if($scorestatus=="false"){
                     $q = mysqli_query($con, "UPDATE history SET score_updated='true' WHERE username='$_SESSION[username]' AND eid='$_GET[eid]' ") or die('Error197');
-                    $q = mysqli_query($con, "SELECT * FROM rank WHERE username='$username'") or die('Error161');
+                    $q = mysqli_query($con, "SELECT * FROM `rank` WHERE username='$username'") or die('Error161');
                     $rowcount = mysqli_num_rows($q);
                     if ($rowcount == 0) {
-                        $q2 = mysqli_query($con, "INSERT INTO rank VALUES(NULL,'$username','$s',NOW())") or die('Error165');
+                        $q2 = mysqli_query($con, "INSERT INTO `rank` VALUES(NULL,'$username','$s',NOW())") or die('Error165');
                     } else {
                         while ($row = mysqli_fetch_array($q)) {
                             $sun = $row['score'];
@@ -173,10 +219,10 @@ if (@$_GET['q'] == 'quiz' && @$_GET['step'] == 2 && isset($_GET['start']) && $_G
                 }
                  if($scorestatus=="false"){
                     $q = mysqli_query($con, "UPDATE history SET score_updated='true' WHERE username='$_SESSION[username]' AND eid='$_GET[eid]' ") or die('Error197');
-                    $q = mysqli_query($con, "SELECT * FROM rank WHERE username='$username'") or die('Error161');
+                    $q = mysqli_query($con, "SELECT * FROM `rank` WHERE username='$username'") or die('Error161');
                     $rowcount = mysqli_num_rows($q);
                     if ($rowcount == 0) {
-                        $q2 = mysqli_query($con, "INSERT INTO rank VALUES(NULL,'$username','$s',NOW())") or die('Error165');
+                        $q2 = mysqli_query($con, "INSERT INTO `rank` VALUES(NULL,'$username','$s',NOW())") or die('Error165');
                     } else {
                         while ($row = mysqli_fetch_array($q)) {
                             $sun = $row['score'];
@@ -260,13 +306,13 @@ function frmreset(){
     }
 var countdownTimer = setInterval(\'secondPassed()\', 1000);
 </script>';
-            echo '<font size="3" style="margin-left:100px;font-family:\'typo\' font-size:20px; font-weight:bold;color:darkred">Time Left : </font><span class="timer btn btn-default" style="margin-left:20px;"><font style="font-family:\'typo\';font-size:20px;font-weight:bold;color:darkblue" id="countdown"></font></span><span class="timer btn btn-primary" style="margin-left:50px" onclick="end()"><span class=" glyphicon glyphicon-off"></span>&nbsp;&nbsp;<font style="font-size:12px;font-weight:bold">Finish Quiz</font></span>';
+            echo '<font size="3" style="margin-left:100px;font-family:\'typo\' font-size:20px; font-weight:bold;color:darkred">Time Left : </font><span class="timer btn btn-default" style="margin-left:20px;"><font style="font-family:\'typo\';font-size:20px;font-weight:bold;color:darkblue" id="countdown"></font></span><span class="timer btn btn-primary" style="margin-left:35%;margin-top:5%" onclick="end()"><span class=" glyphicon glyphicon-off"></span>&nbsp;&nbsp;<font style="font-size:12px;font-weight:bold">Finish Quiz</font></span>';
             $eid   = @$_GET['eid'];
             $sn    = @$_GET['n'];
             $total = @$_GET['t'];
             $q     = mysqli_query($con, "SELECT * FROM questions WHERE eid='$eid' AND sn='$sn' ");
 
-            echo '<div class="panel" style="margin-right:5%;margin-left:5%;margin-top:10px;border-radius:10px">';
+            echo '<div class="panel" style="">';
             while ($row = mysqli_fetch_array($q)) {
                 $qns = stripslashes($row['qns']);
                 $qid = $row['qid'];
@@ -277,7 +323,7 @@ var countdownTimer = setInterval(\'secondPassed()\', 1000);
                 {
                     
                 echo '<b><div style="font-size:20px;font-weight:bold;font-family:calibri;margin:10px">' . $sn . ' : 
-                <img src="'.$c.'"/></div></b>';
+                <img src="'.$c.'" width="100%"/></div></b>';
                 }
 
                 else{
@@ -305,7 +351,7 @@ var countdownTimer = setInterval(\'secondPassed()\', 1000);
             while ($row = mysqli_fetch_array($q)) {
                 $option   = stripslashes($row['option']);
                 $optionid = $row['optionid'];
-                echo '<div class="funkyradio-success"><input type="radio" id="' . $optionid . '" name="ans" value="' . $optionid . '" onclick="enable()"> <label for="' . $optionid . '" style="width:50%"><div style="color:black;font-size:12px;word-wrap:break-word">&nbsp;&nbsp;' . $option . '</div></label></div>';
+                echo '<div class="funkyradio-success"><input type="radio" id="' . $optionid . '" name="ans" value="' . $optionid . '" onclick="enable()"> <label for="' . $optionid . '" style="width:100%"><div style="color:black;font-size:12px;word-wrap:break-word">&nbsp;&nbsp;' . $option . '</div></label></div>';
             }
             echo '</div>';
             if ($_GET["t"] > $_GET["n"] && $_GET["n"] != 1) {
@@ -317,7 +363,7 @@ var countdownTimer = setInterval(\'secondPassed()\', 1000);
             } else {
             }
             echo '</div>';
-            echo '<div class="panel" style="text-align:center">';
+            echo '<div class="panel" style="text-align:center;display:none">';
             $q = mysqli_query($con, "SELECT * FROM questions WHERE eid='$_GET[eid]'") or die("Error222");
             $i = 1;
             while ($row = mysqli_fetch_array($q)) {
@@ -350,10 +396,10 @@ var countdownTimer = setInterval(\'secondPassed()\', 1000);
                 }
                  if(isset($scorestatus)&&$scorestatus=="false"){
                     $q = mysqli_query($con, "UPDATE history SET score_updated='true' WHERE username='$_SESSION[username]' AND eid='$_GET[eid]' ") or die('Error197');
-                    $q = mysqli_query($con, "SELECT * FROM rank WHERE username='$username'") or die('Error161');
+                    $q = mysqli_query($con, "SELECT * FROM `rank` WHERE username='$username'") or die('Error161');
                     $rowcount = mysqli_num_rows($q);
                     if ($rowcount == 0) {
-                        $q2 = mysqli_query($con, "INSERT INTO rank VALUES(NULL,'$username','$s',NOW())") or die('Error165');
+                        $q2 = mysqli_query($con, "INSERT INTO `rank` VALUES(NULL,'$username','$s',NOW())") or die('Error165');
                     } else {
                         while ($row = mysqli_fetch_array($q)) {
                             $sun = $row['score'];
@@ -375,10 +421,10 @@ var countdownTimer = setInterval(\'secondPassed()\', 1000);
                 }
                 if(isset($sc)&&$scorestatus=="false"){
                     $q = mysqli_query($con, "UPDATE history SET score_updated='true' WHERE username='$_SESSION[username]' AND eid='$_GET[eid]' ") or die('Error197');
-                    $q = mysqli_query($con, "SELECT * FROM rank WHERE username='$username'") or die('Error161');
+                    $q = mysqli_query($con, "SELECT * FROM `rank` WHERE username='$username'") or die('Error161');
                     $rowcount = mysqli_num_rows($q);
                     if ($rowcount == 0) {
-                        $q2 = mysqli_query($con, "INSERT INTO rank VALUES(NULL,'$username','$s',NOW())") or die('Error165');
+                        $q2 = mysqli_query($con, "INSERT INTO `rank` VALUES(NULL,'$username','$s',NOW())") or die('Error165');
                     } else {
                         while ($row = mysqli_fetch_array($q)) {
                             $sun = $row['score'];
@@ -445,7 +491,8 @@ if (@$_GET['q'] == 'result' && @$_GET['eid']) {
                 while ($rol = mysqli_fetch_row($r)) {$pat=$rol[0];}
                 if($pat)
                 {
-                    echo '<li><div style="font-size:16px;font-weight:bold;font-family:calibri;margin-top:20px;padding:10px;word-wrap:break-word;border:2px solid darkgreen;border-radius:10px;"><img src="'.$c.'"/><span class="glyphicon glyphicon-ok" style="color:darkgreen"></span></div><br />';
+                    echo '<li><div style="font-size:16px;font-weight:bold;font-family:calibri;margin-top:20px;padding:10px;border:2px solid darkgreen;border-radius:10px;">
+                    <img src="'.$c.'" /><span class="glyphicon glyphicon-ok" style="color:darkgreen"></span></div><br />';
                 }
                 else{ echo '<li><div style="font-size:16px;font-weight:bold;font-family:calibri;margin-top:20px;background-color:lightgreen;padding:10px;word-wrap:break-word;border:2px solid darkgreen;border-radius:10px;">' . $question . ' <span class="glyphicon glyphicon-ok" style="color:darkgreen"></span></div><br />';
                 }
@@ -459,7 +506,7 @@ if (@$_GET['q'] == 'result' && @$_GET['eid']) {
                 while ($rol = mysqli_fetch_row($r)) {$pat=$rol[0];}
                 if($pat)
                 {
-                    echo '<li><div style="font-size:16px;font-weight:bold;font-family:calibri;margin-top:20px;padding:10px;word-wrap:break-word;border:2px solid #b75a0e;border-radius:10px;"><img src="'.$c.'"/></span></div><br />';
+                    echo '<li><div style="font-size:16px;font-weight:bold;font-family:calibri;margin-top:20px;padding:10px;word-wrap:break-word;border:2px solid #b75a0e;border-radius:10px;"><img src="'.$c.'" width="100%" style="width: 100% !important;"/></span></div><br />';
                 }
                 else{
                 echo '<li><div style="font-size:16px;font-weight:bold;font-family:calibri;margin-top:20px;background-color:#f7f576;padding:10px;word-wrap:break-word;border:2px solid #b75a0e;border-radius:10px;">' . $question . ' </div><br />';}
@@ -471,7 +518,7 @@ if (@$_GET['q'] == 'result' && @$_GET['eid']) {
                 while ($rol = mysqli_fetch_row($r)) {$pat=$rol[0];}
                 if($pat)
                 {
-                    echo '<li><div style="font-size:16px;font-weight:bold;font-family:calibri;margin-top:20px;padding:10px;word-wrap:break-word;border:2px solid red;border-radius:10px;"><img src="'.$c.'"/><span class="glyphicon glyphicon-remove" style="color:red"></span></div><br />';
+                    echo '<li><div style="font-size:16px;font-weight:bold;font-family:calibri;margin-top:20px;padding:10px;word-wrap:break-word;border:2px solid red;border-radius:10px;"><img src="'.$c.'" width="100%" style="width: 100% !important;"/><span class="glyphicon glyphicon-remove" style="color:red"></span></div><br />';
                 }else{
                 echo '<li><div style="font-size:16px;font-weight:bold;font-family:calibri;margin-top:20px;background-color:#f99595;padding:10px;word-wrap:break-word;border:2px solid darkred;border-radius:10px;">' . $question . ' <span class="glyphicon glyphicon-remove" style="color:red"></span></div><br />';}
                 echo '<font style="font-size:14px;color:darkgreen"><b>Your Answer: </b></font><font style="font-size:14px;">' . $ans . '</font><br />';
@@ -518,14 +565,14 @@ if (@$_GET['q'] == 3) {
         $showfrom = 1;
         $showtill = 10;
     }
-    $q = mysqli_query($con, "SELECT * FROM rank") or die('Error223');
+    $q = mysqli_query($con, "SELECT * FROM `rank`") or die('Error223');
     echo '<div class="panel title">
 <table class="table table-striped title1" >
-<tr><td style="vertical-align:middle"><b>Rank</b></td><td style="vertical-align:middle"><b>Name</b></td><td style="vertical-align:middle"><b>Branch</b></td><td style="vertical-align:middle"><b>Username</b></td><td style="vertical-align:middle"><b>Score</b></td></tr>';
+<tr><td style="vertical-align:middle"><b>`rank`</b></td><td style="vertical-align:middle"><b>Name</b></td><td style="vertical-align:middle"><b>Branch</b></td><td style="vertical-align:middle"><b>Username</b></td><td style="vertical-align:middle"><b>Score</b></td></tr>';
     $c = $showfrom-1;
     $total = mysqli_num_rows($q);
     if($total >= $showfrom){
-        $q = mysqli_query($con, "SELECT * FROM rank ORDER BY score DESC, time ASC LIMIT ".($showfrom-1).",10") or die('Error223');
+        $q = mysqli_query($con, "SELECT * FROM `rank` ORDER BY score DESC, time ASC LIMIT ".($showfrom-1).",10") or die('Error223');
         while ($row = mysqli_fetch_array($q)) {
             $e = $row['username'];
             $s = $row['score'];
