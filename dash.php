@@ -137,14 +137,14 @@ if (@$_GET['q'] == 2) {
         $showfrom = 1;
         $showtill = 10;
     }
-    $q = mysqli_query($con, "SELECT * FROM rank") or die('Error223');
+    $q = mysqli_query($con, "SELECT * FROM `rank`") or die('Error223');
     echo '<div class="panel title">
 <table class="table table-striped title1" >
-<tr><td style="vertical-align:middle"><b>Rank</b></td><td style="vertical-align:middle"><b>Name</b></td><td style="vertical-align:middle"><b>Branch</b></td><td style="vertical-align:middle"><b>Username</b></td><td style="vertical-align:middle"><b>Roll number</b></td><td style="vertical-align:middle"><b>Gender</b></td><td style="vertical-align:middle"><b>Score</b></td></tr>';
+<tr><td style="vertical-align:middle"><b>`rank`</b></td><td style="vertical-align:middle"><b>Name</b></td><td style="vertical-align:middle"><b>Branch</b></td><td style="vertical-align:middle"><b>Username</b></td><td style="vertical-align:middle"><b>Roll number</b></td><td style="vertical-align:middle"><b>Gender</b></td><td style="vertical-align:middle"><b>Score</b></td></tr>';
     $c = $showfrom-1;
     $total = mysqli_num_rows($q);
     if($total >= $showfrom){
-        $q = mysqli_query($con, "SELECT * FROM rank ORDER BY score DESC, time ASC LIMIT ".($showfrom-1).",10") or die('Error223');
+        $q = mysqli_query($con, "SELECT * FROM `rank` ORDER BY score DESC, time ASC LIMIT ".($showfrom-1).",10") or die('Error223');
         while ($row = mysqli_fetch_array($q)) {
             $e = $row['username'];
             $s = $row['score'];
