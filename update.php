@@ -19,10 +19,10 @@ if (isset($_SESSION['key'])) {
             $user = $row['username'];
             $s = $row['score'];
             $r1 = mysqli_query($con, "UPDATE history SET status='finished',score_updated='true' WHERE eid='$eid' AND username='$user' ") or die('Error');
-            $q1 = mysqli_query($con, "SELECT * FROM rank WHERE username='$user'") or die('Error161');
+            $q1 = mysqli_query($con, "SELECT * FROM `rank` WHERE username='$user'") or die('Error161');
             $rowcount = mysqli_num_rows($q1);
             if ($rowcount == 0) {
-                $q2 = mysqli_query($con, "INSERT INTO rank VALUES(NULL,'$user','$s',NOW())") or die('Error165');
+                $q2 = mysqli_query($con, "INSERT INTO `rank` VALUES(NULL,'$user','$s',NOW())") or die('Error165');
             } else {
                 while ($row = mysqli_fetch_array($q1)) {
                     $sun = $row['score'];
@@ -45,7 +45,7 @@ if (isset($_SESSION['key'])) {
 if (isset($_SESSION['key'])) {
     if (@$_GET['dusername'] && $_SESSION['key'] == '54585c506829293a2d4c3b68543b316e2e7a2d277858545a36362e5f39') {
         $dusername = @$_GET['dusername'];
-        $r1 = mysqli_query($con, "DELETE FROM rank WHERE username='$dusername' ") or die('Error');
+        $r1 = mysqli_query($con, "DELETE FROM `rank` WHERE username='$dusername' ") or die('Error');
         $r2 = mysqli_query($con, "DELETE FROM history WHERE username='$dusername' ") or die('Error');
         $result = mysqli_query($con, "DELETE FROM user WHERE username='$dusername' ") or die('Error');
         header("location:dash.php?q=1");
@@ -78,7 +78,7 @@ if (isset($_SESSION['key'])) {
         $category= $_POST['category'];
         $status  = "disabled";
         $id      = uniqid();
-        $q3      = mysqli_query($con, "INSERT INTO quiz VALUES(NULL,'$id','$name','$correct','$wrong','$total','$time',NULL,'$status','$category')") or die();
+        $q3      = mysqli_query($con, "INSERT INTO quiz VALUES(NULL,'$id','$name','$correct','$wrong','$total','$time',NULL,'$status','$category')") or die('Error63'.mysqli_error($con));
         header("location:dash.php?q=4&step=2&eid=$id&n=$total");
     }
         //imagequiz part
@@ -92,7 +92,7 @@ if (isset($_SESSION['key'])) {
         $category= $_POST['category'];
         $status  = "disabled";
         $id      = uniqid();
-        $q3      = mysqli_query($con, "INSERT INTO quiz VALUES(NULL,'$id','$name','$correct','$wrong','$total','$time',NULL,'$status','$category')");
+        $q3      = mysqli_query($con, "INSERT INTO quiz VALUES(NULL,'$id','$name','$correct','$wrong','$total','$time',NULL,'$status','$category')") or die('Error63'.mysqli_error($con));
         header("location:dash.php?q=4&step=28&eid=$id&n=$total");
     }
 }
@@ -331,10 +331,10 @@ if (@$_GET['q'] == 'quiz' && @$_GET['step'] == 2 && isset($_SESSION['6e447159425
                 }
                 if($scorestatus=="false"){
                     $q = mysqli_query($con, "UPDATE history SET score_updated='true' WHERE username='$_SESSION[username]' AND eid='$_GET[eid]' ") or die('Error197');
-                    $q = mysqli_query($con, "SELECT * FROM rank WHERE username='$username'") or die('Error161');
+                    $q = mysqli_query($con, "SELECT * FROM `rank` WHERE username='$username'") or die('Error161');
                     $rowcount = mysqli_num_rows($q);
                     if ($rowcount == 0) {
-                        $q2 = mysqli_query($con, "INSERT INTO rank VALUES(NULL,'$username','$s',NOW())") or die('Error165');
+                        $q2 = mysqli_query($con, "INSERT INTO `rank` VALUES(NULL,'$username','$s',NOW())") or die('Error165');
                     } else {
                         while ($row = mysqli_fetch_array($q)) {
                             $sun = $row['score'];
@@ -356,10 +356,10 @@ if (@$_GET['q'] == 'quiz' && @$_GET['step'] == 2 && isset($_SESSION['6e447159425
                 }
                 if($scorestatus=="false"){
                     $q = mysqli_query($con, "UPDATE history SET score_updated='true' WHERE username='$_SESSION[username]' AND eid='$_GET[eid]' ") or die('Error197');
-                    $q = mysqli_query($con, "SELECT * FROM rank WHERE username='$username'") or die('Error161');
+                    $q = mysqli_query($con, "SELECT * FROM `rank` WHERE username='$username'") or die('Error161');
                     $rowcount = mysqli_num_rows($q);
                     if ($rowcount == 0) {
-                        $q2 = mysqli_query($con, "INSERT INTO rank VALUES(NULL,'$username','$s',NOW())") or die('Error165');
+                        $q2 = mysqli_query($con, "INSERT INTO `rank` VALUES(NULL,'$username','$s',NOW())") or die('Error165');
                     } else {
                         while ($row = mysqli_fetch_array($q)) {
                             $sun = $row['score'];
@@ -447,10 +447,10 @@ if (@$_GET['q'] == 'quiz' && @$_GET['step'] == 2 && isset($_SESSION['6e447159425
                 }
                 if($scorestatus=="false"){
                     $q = mysqli_query($con, "UPDATE history SET score_updated='true' WHERE username='$_SESSION[username]' AND eid='$_GET[eid]' ") or die('Error197');
-                    $q = mysqli_query($con, "SELECT * FROM rank WHERE username='$username'") or die('Error161');
+                    $q = mysqli_query($con, "SELECT * FROM `rank` WHERE username='$username'") or die('Error161');
                     $rowcount = mysqli_num_rows($q);
                     if ($rowcount == 0) {
-                        $q2 = mysqli_query($con, "INSERT INTO rank VALUES(NULL,'$username','$s',NOW())") or die('Error165');
+                        $q2 = mysqli_query($con, "INSERT INTO `rank` VALUES(NULL,'$username','$s',NOW())") or die('Error165');
                     } else {
                         while ($row = mysqli_fetch_array($q)) {
                             $sun = $row['score'];
@@ -472,10 +472,10 @@ if (@$_GET['q'] == 'quiz' && @$_GET['step'] == 2 && isset($_SESSION['6e447159425
                 }
                 if($scorestatus=="false"){
                     $q = mysqli_query($con, "UPDATE history SET score_updated='true' WHERE username='$_SESSION[username]' AND eid='$_GET[eid]' ") or die('Error197');
-                    $q = mysqli_query($con, "SELECT * FROM rank WHERE username='$username'") or die('Error161');
+                    $q = mysqli_query($con, "SELECT * FROM `rank` WHERE username='$username'") or die('Error161');
                     $rowcount = mysqli_num_rows($q);
                     if ($rowcount == 0) {
-                        $q2 = mysqli_query($con, "INSERT INTO rank VALUES(NULL,'$username','$s',NOW())") or die('Error165');
+                        $q2 = mysqli_query($con, "INSERT INTO `rank` VALUES(NULL,'$username','$s',NOW())") or die('Error165');
                     } else {
                         while ($row = mysqli_fetch_array($q)) {
                             $sun = $row['score'];
