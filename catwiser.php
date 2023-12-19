@@ -3,6 +3,7 @@
     session_start();
     ob_start();
     $_SESSION['visit']='0';
+    $_SESSION['isdisplayed']='0';
     $c=$_GET['cat'];
     $username=$_GET['user'];
     if (!(isset($_SESSION['username']))) 
@@ -70,10 +71,12 @@
      <link  rel="stylesheet" href="css/font.css">
      <script src="js/jquery.js" type="text/javascript"></script>
      <script src="js/bootstrap.min.js"  type="text/javascript"></script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6335432508397861"
+     crossorigin="anonymous"></script>
     </head>
     <body>
   
-    <?php $result = mysqli_query($con, "SELECT * FROM quiz WHERE status = 'enabled' and category = '$c' ORDER BY date DESC") or die('Error');
+    <?php $result = mysqli_query($con, "SELECT * FROM quiz WHERE status = 'enabled' and category = '$c' ORDER BY title ASC") or die('Error');
         echo '<div class="panel"><table class="table table-striped title1"  style="vertical-align:middle">';
         $c = 1;
         while ($row = mysqli_fetch_array($result)) {
