@@ -105,7 +105,7 @@ if (@$_GET['q'] == 6)
 <?php
 if (@$_GET['q'] == 0) {
     
-    $result = mysqli_query($con, "SELECT * FROM quiz ORDER BY date DESC") or die('Error');
+    $result = mysqli_query($con, "SELECT * FROM quiz ORDER BY ID DESC") or die('Error');
     echo '<div class="panel"><table class="table table-striped title1"  style="vertical-align:middle">
 <tr><td style="vertical-align:middle"><b>S.N.</b></td><td style="vertical-align:middle"><b>Name</b></td><td style="vertical-align:middle"><b>Total question</b></td><td style="vertical-align:middle"><b>Marks</b></td><td style="vertical-align:middle"><b>Time limit</b></td><td style="vertical-align:middle"><b>Status</b></td><td style="vertical-align:middle"><b>Action</b></td></tr>';
     $c = 1;
@@ -464,7 +464,7 @@ if (@$_GET['q'] == 4 && (@$_GET['step']) == 28) {
 
 if (@$_GET['q'] == 5) {
     
-    $result = mysqli_query($con, "SELECT * FROM quiz ORDER BY date ASC") or die('Error');
+    $result = mysqli_query($con, "SELECT * FROM quiz ORDER BY ID DESC") or die('Error');
     echo '<div class="panel"><table class="table table-striped title1">
 <tr><td style="vertical-align:middle"><b>S.N.</b></td><td style="vertical-align:middle"><b>Topic</b></td><td style="vertical-align:middle"><b>Total question</b></td><td style="vertical-align:middle"><b>Marks</b></td><td style="vertical-align:middle"><b>Time limit</b></td><td style="vertical-align:middle"><b>Action</b></td></tr>';
     $c = 1;
