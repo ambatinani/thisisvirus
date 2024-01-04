@@ -8,7 +8,14 @@ $nt=0;
 $ut=$_SESSION['username'];
 $pat=0;
 //if($rp){echo '<script>window.history.go(-1);</script>';} 
-if($rp)
+
+if ($rp) {
+    echo '<script>window.history.go(-(window.history.length-3));</script>';
+
+}
+
+//if($rp){echo '<script>window.history.go(-10);</script>';} 
+/*if($rp)
 {
 
     $tempp=$_GET['eid'];
@@ -25,7 +32,7 @@ if($rp)
 
 
 }
-
+*/
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
